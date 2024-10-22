@@ -1,9 +1,13 @@
 //FRAMEWORK CONFIGURATION:
 
 const express = require("express");
-const connectDb = require("./config/dbConnection");
-const errorHandler = require("./middleware/errorHandler");
+const connectDb = require("./config/dbConnection.js");
+const errorHandler = require("./middlewares/errorHandler.js");
 const cors = require("cors");
+
+//env file config
+const dotenv = require("dotenv");
+dotenv.config();
 
 connectDb();
 const app = express();
@@ -18,7 +22,7 @@ app.get('/',(req,res)=>{
 });
 
 //Error handling middleware
-app.use(errorHandler());
+app.use(errorHandler);
 
 //APP CONFIG START
 app.listen(port, () => {
