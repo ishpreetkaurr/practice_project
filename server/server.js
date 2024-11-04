@@ -1,60 +1,41 @@
-//FRAMEWORK CONFIGURATION:
-
-const express = require("express");
+const express = require('express');
 const connectDb = require("./config/dbConnection.js");
 const errorHandler = require("./middlewares/errorHandler.js");
 const cors = require("cors");
-const hbs = require("hbs");
-const path = require("path");
-
-const users = [
-    { name: "ish", age: 20 },
-    { name: "tanu", age: 21 },
-    { name: "mehr", age: 1 },
-];
-
-//env file config
 const dotenv = require("dotenv");
+const path = require("path");
+const hbs = require("hbs");
+
 dotenv.config();
 
-connectDb();
+connectDb(); // Connect to the database
 const app = express();
+const PORT = process.env.PORT || 3001; // Change port to 3001
+
+// Set up Handlebars as the view engine
 app.set('view engine', 'hbs');
-const port = process.env.PORT || 5000;
+app.set('views', path.join(__dirname, 'views')); // Ensure this points to the right directory
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 app.use(cors());
 
-//routes below
-app.get('/',(req,res)=>{
-    res.send("working");
+// Routes
+app.get('/', (req, res) => {
+    res.send('Working');
 });
 
-app.set('view engine' , 'hbs');
-app.set('views', path.join(__dirname, 'views'));
+// Register Handlebars partials
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
-app.get('/home',(req,res)=>{
-    //let user = User.findOne({id:})
-    res.render("home",{
-        username:"Carlos",
-        posts:"Spain, Italy"
-    })
-});
-
-app.get('/allUsers',(req,res)=>{
-        res.render("alluser", {
-        users: users, 
-        });
-});
 
 // Register route
 app.use("/api/register", require("./routes/userRoutes"));
+app.use("/api/doctor", require("./routes/doctorDetails")); // Ensure this route is registered
 
+// Error handling middleware
+app.use(errorHandler); // Use your error handler middleware
 
-//Error handling middleware
-app.use(errorHandler);
-
-//APP CONFIG START
-app.listen(port, () => {
-console.log(`Server running on port http://localhost:${port}`);
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
