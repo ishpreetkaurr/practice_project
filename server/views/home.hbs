@@ -17,11 +17,17 @@
     </ul>
     {{/if}}
     
-    <h2>All Users</h2>
-<ul>
-  {{#each data}}
-    {{> header }}
-  {{/each}}
-</ul>
+    {{!-- <h2>All Users</h2>
+    <ul>
+    {{#each data}}
+        {{> header }}
+    {{/each}}
+    </ul> --}}
+    <div>
+        <form action="/profile" method="post" enctype="multipart/form-data">
+    <input type="file" name="avatar" />
+    <input type = "submit" value="Upload">
+    </form>
+    </div>
 </body>
 </html>
