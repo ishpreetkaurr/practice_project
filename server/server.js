@@ -23,6 +23,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+app.get('/', (req, res) => {
+    res.send('Working');
+});
+
 // Configure Multer storage with unique filenames
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -35,6 +39,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+// Home route to render the page
 app.get("/home", async (req, res) => {
     // Fetch all uploaded files from MongoDB
     const files = await File.find();
@@ -45,9 +50,10 @@ app.get("/home", async (req, res) => {
     });
 });
 
+// Route to handle file upload and save metadata in MongoDB
 app.post('/profile', upload.single('avatar'), async (req, res) => {
     try {
-        
+        // Create a new file record in MongoDB
         const fileData = new File({
             originalName: req.file.originalname,
             filename: req.file.filename,
