@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 const path = require("path");
 const hbs = require("hbs");
 const multer = require('multer');
-const File = require('./models/file'); // Import the File model
+const File = require('./models/file'); 
 
 dotenv.config();
 connectDb(); // Connect to the database
@@ -15,13 +15,13 @@ connectDb(); // Connect to the database
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Set up Handlebars as the view engine
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/', (req, res) => {
     res.send('Working');
@@ -70,6 +70,8 @@ app.post('/profile', upload.single('avatar'), async (req, res) => {
         res.status(500).send("Error uploading file.");
     }
 });
+
+
 
 // Error handling middleware
 app.use(errorHandler);

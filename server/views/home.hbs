@@ -6,28 +6,36 @@
     <title>Document</title>
 </head>
 <body>
-    <h1> Hey wassup?</h1>
-    {{username}}
-
-    {{#if data}}
+    <p>{{username}}</p>
+    
+    {{#if users}}
+    <h2>User List</h2>
     <ul>
-        {{#each data}}
-            <li>Name: {{this.name}}, Team: {{this.team}}</li>
+        {{#each users}}
+            <li>Name: {{this.name}}, Age: {{this.age}}</li>
         {{/each}}
     </ul>
-    {{/if}}
-    
-    {{!-- <h2>All Users</h2>
+    {{/if}}
+
+    {{#if files}}
+    <h2>Uploaded Files</h2>
     <ul>
-    {{#each data}}
-        {{> header }}
-    {{/each}}
-    </ul> --}}
+        {{#each files}}
+            <li>
+                <p>File Name: {{this.originalName}}</p>
+                <img src="/uploads/{{this.filename}}" alt="{{this.originalName}}" style="width: 200px; height: auto;">
+                <p>Size: {{this.size}} bytes</p>
+            </li>
+        {{/each}}
+    </ul>
+    {{/if}}
+    
     <div>
+        <h2>Upload a File</h2>
         <form action="/profile" method="post" enctype="multipart/form-data">
-    <input type="file" name="avatar" />
-    <input type = "submit" value="Upload">
-    </form>
+            <input type="file" name="avatar"/>
+            <input type="submit" value="Upload"/>
+        </form>
     </div>
 </body>
 </html>
