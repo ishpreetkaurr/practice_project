@@ -23,6 +23,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+app.use("/api/register",require("./routes/userRoutes"));
+
+app.get("/alluser", (req, res) => {
+    const users = []; // Replace with actual users array
+    res.render("alluser", {
+        users: users, 
+    });
+});
+
+app.use("/api/login", require("./routes/userRoutes")); // Login route
+
+// Error handling middleware
+app.use(errorHandler); // Use your error handler middleware
+
+
 app.get('/', (req, res) => {
     res.send('Working');
 });
