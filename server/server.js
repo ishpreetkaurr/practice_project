@@ -32,7 +32,9 @@ app.get("/alluser", (req, res) => {
     });
 });
 
-app.use("/api/login", require("./routes/userRoutes")); // Login route
+app.use("/api/login", require("./routes/userRoutes")); // Login route\
+
+app.use("/api/account", require("./routes/userRoutes")); 
 
 // Error handling middleware
 app.use(errorHandler); // Use your error handler middleware
