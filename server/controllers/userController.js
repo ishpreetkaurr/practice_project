@@ -82,7 +82,43 @@ const myAccount = asyncHandler(async (req, res) => {
         return res.status(404).json({ message: "User not found" });
     }
 
-    // res.send(user);
+    res.send(user);
 });
 
-module.exports = { registerUser, loginUser,  myAccount };
+const updateProfile = asyncHandler(async (req, res) => {
+
+    const {firstName,lastName, email, password, phoneNumber} = req.body;
+    const userId = req.user.userId; 
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
+    if (firstName) user.firstName = firstName;
+    if (lastName) user.lastName = lastName;
+    if (email) user.email = email;
+    if (phoneNumber) user.phoneNumber = phoneNumber;
+
+    if (password) {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+    }
+
+    await user.save();
+
+    res.status(200).json({
+        message: "Profile updated successfully",
+        user: {
+            id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+        },
+    });
+
+});
+
+module.exports = { registerUser, loginUser,  myAccount, updateProfile };
