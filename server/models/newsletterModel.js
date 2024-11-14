@@ -1,4 +1,4 @@
-const { title } = require("framer-motion/client");
+
 const mongoose = require("mongoose");
 
 const newsletterSchema = mongoose.Schema({
@@ -11,20 +11,20 @@ const newsletterSchema = mongoose.Schema({
         required: [true, "please add name of the author"], // Corrected error message
     },
     date: {
-        type: Number, 
+        type: Date, 
         required: [true, "please add date"], // Corrected 'require' to 'required'
     },
     imageUrl: {
         type: String, 
-        required: [true, "please add imageUrl"], // Corrected 'require' to 'required'
+        required: [true, "please add imageUrl"],
     },
     description: {
         type: String, 
-        required: [true, "please add image description"], // Corrected 'require' to 'required'
+        required: [true, "please add image description"], 
     }
     
 }, {
     timestamps: true, 
 });
 
-module.exports = mongoose.model("newsLetter", newsletterSchema);
+module.exports = mongoose.model("NewsLetter", newsletterSchema);

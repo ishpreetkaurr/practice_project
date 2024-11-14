@@ -33,14 +33,14 @@ app.get("/alluser", (req, res) => {
 });
 
 app.use("/api/login", require("./routes/userRoutes")); // Login route\
-
+app.use("/api/newsletter", require("./routes/newsletterRoutes"));
 app.use("/api/account", require("./routes/userRoutes")); 
 
 // Error handling middleware
 app.use(errorHandler); // Use your error handler middleware
 
 //route for newsletter :- newsletter is kind of a blog...
-app.use("/api/newsletter", require("./routes/newsletterRoutes"));
+
 
 app.get('/', (req, res) => {
     res.send('Working');

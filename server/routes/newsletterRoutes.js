@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { getNewsletter, createNewsletter} = require("../controllers/newsletterController");
-const {jwtMiddleware} = require("../middlewares/jwtMiddleware");
+const { getNewsLetter, createNewsLetter} = require("../controllers/newsletterController");
+const {generateToken, validateToken}  = require("../middlewares/jwtMiddleware");
 
-router.get("/",getNewsletter);
+router.get("/",getNewsLetter);
 
-router.post("/",jwtMiddleware, createNewsletter);
+router.post("/",validateToken, createNewsLetter);
+
+module.exports = router;
